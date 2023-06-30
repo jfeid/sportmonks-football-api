@@ -1,6 +1,6 @@
 # Sportmonks Football API PHP Client
 
-PHP Library for [Sportmonks](https://www.sportmonks.com/) Soccer API v3. Developed by [Carsten Tetzlaff](mailto:carsten-tetzlaff@outlook.com). This Library is heavily inspired by https://github.com/joesaunderson/sportmonks-soccer.
+PHP Library for [Sportmonks](https://www.sportmonks.com/) Soccer API v3. Initially developed by [Carsten Tetzlaff](mailto:carsten-tetzlaff@outlook.com), extended by [Giannis Feidaros](mailto:giannisfd@gmail.com). This Library is heavily inspired by https://github.com/joesaunderson/sportmonks-soccer.
 
 ## Prerequisites
 
@@ -89,6 +89,16 @@ $response = FootballApi::fixtures()
     ->setFilter(['eventTypes:18,14'])
     ->getByDate('2023-03-19');
 ```
+
+### Select
+
+```php
+// API call for Fixtures with select
+$response = FootballApi::fixtures()
+    ->setSelect(['id', 'name', 'starting_at'])
+    ->getByDate('2023-06-30');
+```
+
 Note: This client will not validate the usage for the correct endpoints and will not throw an error. Refer to the 
 [Sportmonks docs](https://docs.sportmonks.com/football/endpoints-and-entities/endpoints) to see which endpoints support the above parameters. 
 
