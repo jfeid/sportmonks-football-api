@@ -73,11 +73,17 @@ class FootballClient {
 		return $this;
 	}
 
-	/**
-	 * @param array $includes
-	 * @return $this
-	 */
-	public function setFilters(array $filters) {
+    /**
+     * @param array|string $filters
+     * @return $this
+     */
+	public function setFilters(array|string $filters): FootballClient
+    {
+        if (is_string($filters)) {
+            $this->query['filters'] = $filters;
+            return $this;
+        }
+
 		// prepare filter
 		$filter = [];
 
