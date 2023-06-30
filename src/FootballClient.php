@@ -106,4 +106,14 @@ class FootballClient {
 		$this->query['per_page'] = $perPage;
 		return $this;
 	}
+
+    /**
+     * @param array $fields
+     * @return $this
+     */
+    public function setSelect(array $fields) {
+        // Trim & Join Array of fields
+        $this->query['select'] = implode(",", array_map("trim", array_filter($fields)));
+        return $this;
+    }
 }
