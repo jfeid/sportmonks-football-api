@@ -64,13 +64,11 @@ class FootballClient {
 	}
 
 	/**
-	 * @param array $includes
+	 * @param array|string $include
 	 * @return $this
 	 */
-	public function setIncludes(array $includes) {
-		// Trim & Join Array of Includes
-		$this->query['include'] = implode(";", array_map("trim", array_filter($includes)));
-		return $this;
+	public function setInclude(array|string $include) {
+        return $this->setParam('include', $include);
 	}
 
     /**
@@ -79,21 +77,30 @@ class FootballClient {
      */
 	public function setFilters(array|string $filters): FootballClient
     {
-        if (is_string($filters)) {
-            $this->query['filters'] = $filters;
+		return $this->setParam('filters', $filters);
+	}
+
+    /**
+     * @param string $param
+     * @param array|string $value
+     * @return $this
+     */
+    protected function setParam(string $param, array|string $value): FootballClient
+    {
+        if (is_string($value)) {
+            $this->query[$param] = $value;
             return $this;
         }
 
-		// prepare filter
-		$filter = [];
+        $paramValue = [];
 
-		foreach ($filters as $filterName => $filterVars) {
-			$filter[] = $filterName . ':' . implode(",", array_map("trim", array_filter($filterVars)));
-		}
+        foreach ($value as $filterName => $filterVars) {
+            $paramValue[] = $filterName . ':' . implode(",", array_map("trim", array_filter($filterVars)));
+        }
 
-		$this->query['filters'] = implode(";", $filter);
-		return $this;
-	}
+        $this->query[$param] = implode(";", $paramValue);
+        return $this;
+    }
 
 	/**
 	 * @param int $page
